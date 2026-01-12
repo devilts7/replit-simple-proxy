@@ -36,3 +36,22 @@ A simple HTTP proxy server with a clean frontend interface.
 - No authentication - anyone with access can use it
 - No rate limiting - prone to abuse
 - Do not deploy publicly without proper protections
+
+
+## help 
+
+- just run npm install
+- then run npm start
+- or press the run button
+- thats it i dont know the rest i struggle with js
+- it canot run youtube or google.com
+- at the moment 
+
+## suggestions
+
+- sorry about any typos
+- if you have any suggestions please make a pull request
+- or email me at tobysaltmarsh@hotmail.com
+- thanks for any help 
+- 
+- 
