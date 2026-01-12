@@ -1,0 +1,255 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background:  linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow:  0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.header-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.btn-icon {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  font-size: 1.2em;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background: linear-gradient(135deg, #1a1c2c 0%, #4a192c 100%);
+  color: #e0e0e0;
+}
+
+body.dark-mode .container {
+  background: #1e1e1e;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+body.dark-mode .input-section {
+  background: #2d2d2d;
+  border-bottom-color: #444;
+}
+
+body.dark-mode #urlInput {
+  background: #333;
+  border-color: #555;
+  color: white;
+}
+
+body.dark-mode .info-box {
+  background: #1a2a3a;
+  border-left-color: #3399ff;
+}
+
+body.dark-mode .info-box h3, 
+body.dark-mode .info-box a {
+  color: #3399ff;
+}
+
+body.dark-mode .info-box a:hover {
+  text-decoration: underline;
+}
+
+body.dark-mode .metrics {
+  background: #2d2d2d;
+  border-color: #444;
+}
+
+body.dark-mode .metrics h3 {
+  color: #e0e0e0;
+}
+
+body.dark-mode #metricsOutput {
+  background: #121212;
+  border-color: #444;
+  color: #00ff00;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 1.1em;
+  opacity: 0.9;
+}
+
+.input-section {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+#urlInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size:  1em;
+  transition: border-color 0.3s;
+}
+
+#urlInput:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+button {
+  padding: 12px 24px;
+  background:  #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition:  background 0.3s;
+}
+
+button:hover {
+  background:  #5568d3;
+}
+
+.btn-secondary {
+  background: #6c757d;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.status {
+  padding: 15px 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.status p {
+  margin: 0;
+}
+
+.loading {
+  color: #0066cc;
+}
+
+.success {
+  color: #28a745;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.info-box {
+  background: #e7f3ff;
+  border-left: 4px solid #0066cc;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 6px;
+}
+
+.info-box h3 {
+  color: #0066cc;
+  margin-bottom: 10px;
+}
+
+.info-box ul {
+  margin-left: 20px;
+}
+
+.info-box li {
+  margin:  8px 0;
+}
+
+. info-box a {
+  color:  #0066cc;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.info-box a:hover {
+  text-decoration: underline;
+}
+
+#proxyFrame {
+  width:  100%;
+  height: 600px;
+  border: none;
+  display: block;
+  margin: 20px 0;
+}
+
+.metrics {
+  background: #f8f9fa;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 6px;
+  border:  1px solid #dee2e6;
+}
+
+.metrics h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+#metricsOutput {
+  background: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .input-section {
+    flex-direction: column;
+  }
+
+  header h1 {
+    font-size: 1.8em;
+  }
+
+  #proxyFrame {
+    height: 400px;
+  }
+}

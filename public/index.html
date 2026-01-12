@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Replit Proxy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-controls">
+        <button onclick="toggleDarkMode()" id="themeToggle" class="btn-icon">🌙</button>
+      </div>
+      <h1>🌐 Replit Proxy</h1>
+      <p>Load any website through this proxy</p>
+    </header>
+
+    <div class="input-section">
+      <input 
+        type="text" 
+        id="urlInput" 
+        placeholder="Enter URL (e.g., example.com, wikipedia.org)" 
+        autofocus
+      >
+      <button onclick="loadProxy()">Load</button>
+      <button onclick="clearCache()" class="btn-secondary">Clear Cache</button>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div class="info-box">
+      <h3>ℹ️ Note:</h3>
+      <p><strong>Google blocks proxy requests. </strong> Try these instead:</p>
+      <ul>
+        <li><a href="javascript:loadUrl('https://example.com')">example.com</a></li>
+        <li><a href="javascript:loadUrl('https://en.wikipedia.org')">Wikipedia</a></li>
+        <li><a href="javascript:loadUrl('https://httpbin.org/get')">HTTPBin</a></li>
+        <li><a href="javascript: loadUrl('https://github.com')">GitHub</a></li>
+        <li><a href="javascript: loadUrl('https://news.ycombinator.com')">HackerNews</a></li>
+      </ul>
+    </div>
+
+    <iframe id="proxyFrame" title="Proxied Content"></iframe>
+
+    <div class="metrics">
+      <h3>📊 Metrics</h3>
+      <button onclick="loadMetrics()">Refresh Metrics</button>
+      <pre id="metricsOutput"></pre>
+    </div>
+  </div>
+
+  <script>
+    function loadUrl(url) {
+      document.getElementById('urlInput').value = url;
+      loadProxy();
+    }
+
+    function loadProxy() {
+      const url = document.getElementById('urlInput').value.trim();
+      const statusDiv = document.getElementById('status');
+
+      if (!url) {
+        statusDiv.innerHTML = '<p class="error">Please enter a URL</p>';
+        return;
+      }
+
+      statusDiv.innerHTML = '<p class="loading">Loading...</p>';
+      const encodedUrl = encodeURIComponent(url);
+      const proxyUrl = `/proxy?url=${encodedUrl}`;
+
+      // Load in iframe
+      const iframe = document.getElementById('proxyFrame');
+      iframe.src = proxyUrl;
+
+      // Ensure the iframe is visible if it was hidden
+      iframe.style.display = 'block';
+
+      iframe.onload = () => {
+        statusDiv.innerHTML = '<p class="success">✓ Loaded successfully</p>';
+        loadMetrics();
+      };
+
+      iframe. onerror = () => {
+        statusDiv.innerHTML = '<p class="error">✗ Failed to load.  Check debug info below.</p>';
+        loadMetrics();
+      };
+
+      // Also fetch to see response
+      fetch(proxyUrl)
+        .then(res => {
+          if (!res.ok) {
+            statusDiv.innerHTML = `<p class="error">✗ Server returned ${res.status}</p>`;
+          }
+        })
+        .catch(err => {
+          statusDiv.innerHTML = `<p class="error">✗ Error:  ${err.message}</p>`;
+        });
+    }
+
+    function clearCache() {
+      fetch('/admin/cache/clear', {
+        method: 'POST',
+        headers: {
+          'x-admin-token': 'default-token'
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert('Cache cleared! ');
+        loadMetrics();
+      })
+      .catch(err => alert('Error:  ' + err.message));
+    }
+
+    function loadMetrics() {
+      fetch('/metrics')
+        .then(res => res. json())
+        .then(data => {
+          document.getElementById('metricsOutput').textContent = JSON.stringify(data, null, 2);
+        });
+    }
+
+    // Load metrics on page load
+    window.addEventListener('load', () => {
+      loadMetrics();
+      if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('themeToggle').textContent = '☀️';
+      }
+    });
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const btn = document.getElementById('themeToggle');
+      if (body.classList.contains('dark-mode')) {
+        body.classList.remove('dark-mode');
+        btn.textContent = '🌙';
+        localStorage.setItem('darkMode', 'disabled');
+      } else {
+        body.classList.add('dark-mode');
+        btn.textContent = '☀️';
+        localStorage.setItem('darkMode', 'enabled');
+      }
+    }
+
+    // Allow Enter key to load
+    document.getElementById('urlInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') loadProxy();
+    });
+  </script>
+</body>
+</html>
